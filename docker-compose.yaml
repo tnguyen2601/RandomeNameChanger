@@ -1,0 +1,22 @@
+services:
+  random-name-changer:
+    build: .
+    container_name: rnc-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./logs:/app/logs:rw
+    networks:
+      - bot-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  bot-network:
+    driver: bridge
